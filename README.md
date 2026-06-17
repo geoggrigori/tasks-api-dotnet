@@ -1,5 +1,7 @@
 ![tasks-api-dotnet](assets/banner.svg)
 
+[![CI](https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml)
+
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![C#](https://img.shields.io/badge/C%23-12-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
 [![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger&logoColor=black)](https://swagger.io/)
