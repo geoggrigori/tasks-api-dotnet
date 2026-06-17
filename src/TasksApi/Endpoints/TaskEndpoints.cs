@@ -80,6 +80,22 @@ public static class TaskEndpoints
         .WithName("UpdateTask")
         .WithSummary("Replace an existing task.");
 
+        group.MapPatch("/{id:guid}/toggle", async (Guid id, ITaskRepository repo, CancellationToken ct) =>
+        {
+            var existing = await repo.GetAsync(id, ct);
+            if (existing is null)
+            {
+                return Results.NotFound();
+            }
+
+            existing.Done = !existing.Done;
+
+            await repo.UpdateAsync(existing, ct);
+            return Results.Ok(TaskResponse.FromEntity(existing));
+        })
+        .WithName("ToggleTask")
+        .WithSummary("Flip the completion state of a task.");
+
         group.MapDelete("/{id:guid}", async (Guid id, ITaskRepository repo, CancellationToken ct) =>
         {
             var deleted = await repo.DeleteAsync(id, ct);
