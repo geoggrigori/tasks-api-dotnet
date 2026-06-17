@@ -129,6 +129,37 @@ public class TaskEndpointsTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
+    public async Task Toggle_FlipsDone_ReturnsOk()
+    {
+        var client = CreateClient();
+
+        var created = await (await client.PostAsJsonAsync("/tasks", new CreateTaskRequest("Toggle endpoint")))
+            .Content.ReadFromJsonAsync<TaskResponse>();
+        Assert.False(created!.Done);
+
+        var first = await client.PatchAsync($"/tasks/{created.Id}/toggle", null);
+        Assert.Equal(HttpStatusCode.OK, first.StatusCode);
+        var afterFirst = await first.Content.ReadFromJsonAsync<TaskResponse>();
+        Assert.Equal(created.Id, afterFirst!.Id);
+        Assert.True(afterFirst.Done);
+
+        var second = await client.PatchAsync($"/tasks/{created.Id}/toggle", null);
+        Assert.Equal(HttpStatusCode.OK, second.StatusCode);
+        var afterSecond = await second.Content.ReadFromJsonAsync<TaskResponse>();
+        Assert.False(afterSecond!.Done);
+    }
+
+    [Fact]
+    public async Task Toggle_Unknown_ReturnsNotFound()
+    {
+        var client = CreateClient();
+
+        var response = await client.PatchAsync($"/tasks/{Guid.NewGuid()}/toggle", null);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
     public async Task Delete_ReturnsNoContent_ThenNotFound()
     {
         var client = CreateClient();
