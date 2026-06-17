@@ -38,6 +38,7 @@ A clean, well-tested **Minimal API** for task management, built with **ASP.NET C
 | GET    | `/tasks/{id}`  | Get a single task by id                       | `200`, `404`              |
 | POST   | `/tasks`       | Create a new task                             | `201`, `400`              |
 | PUT    | `/tasks/{id}`  | Replace an existing task                      | `200`, `400`, `404`       |
+| PATCH  | `/tasks/{id}/toggle` | Flip the `done` flag of a task          | `200`, `404`              |
 | DELETE | `/tasks/{id}`  | Delete a task by id                           | `204`, `404`              |
 
 ## Request flow
@@ -162,6 +163,25 @@ curl -i -X PUT http://localhost:5080/tasks/3f2504e0-4f89-41d3-9a0c-0305e82c3301 
 }
 ```
 
+### Toggle a task's completion — `200 OK` / `404 Not Found`
+
+Flips the `done` flag with a single call — no body required.
+
+```bash
+curl -i -X PATCH http://localhost:5080/tasks/3f2504e0-4f89-41d3-9a0c-0305e82c3301/toggle
+```
+
+```json
+{
+  "id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
+  "title": "Buy milk",
+  "done": true,
+  "createdAt": "2026-06-16T12:00:00.123Z"
+}
+```
+
+An unknown id returns `404 Not Found`.
+
 ### Delete a task — `204 No Content`
 
 ```bash
@@ -180,7 +200,7 @@ A second delete of the same id returns `404 Not Found`.
 dotnet test
 ```
 
-The suite uses xUnit and `Microsoft.AspNetCore.Mvc.Testing` to exercise the API end to end, covering creation, retrieval, listing, the `done` filter, updates, deletion and validation.
+The suite uses xUnit and `Microsoft.AspNetCore.Mvc.Testing` to exercise the API end to end, covering creation, retrieval, listing, the `done` filter, updates, toggling, deletion and validation.
 
 ## Project structure
 
