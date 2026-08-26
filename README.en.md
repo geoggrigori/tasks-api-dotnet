@@ -10,8 +10,6 @@
 <a href="README.es.md"><img src="https://img.shields.io/badge/Español-555555?style=for-the-badge" alt="Español"/></a>
 </div>
 
-![tasks-api-dotnet](assets/banner.svg)
-
 [![CI](https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml)
 
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
