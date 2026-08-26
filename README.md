@@ -1,220 +1,127 @@
-![tasks-api-dotnet](assets/banner.svg)
+<!-- ══════════════════════════ TÍTULO ══════════════════════════ -->
+<div align="center">
+  <img src="docs/title-banner.svg" width="100%" alt="tasks-api-dotnet"/>
+</div>
 
-[![CI](https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml)
+<!-- ══════════════════════ IDIOMAS / LANGUAGES ══════════════════════ -->
+<div align="center">
+<a href="README.md"><img src="https://img.shields.io/badge/Português-1987F0?style=for-the-badge" alt="Português"/></a>
+<a href="README.en.md"><img src="https://img.shields.io/badge/English-555555?style=for-the-badge" alt="English"/></a>
+<a href="README.es.md"><img src="https://img.shields.io/badge/Español-555555?style=for-the-badge" alt="Español"/></a>
+</div>
 
-[![.NET](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-[![C#](https://img.shields.io/badge/C%23-12-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
-[![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger&logoColor=black)](https://swagger.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-6B2FB5.svg)](LICENSE)
+<div align="center">
+  <img src="assets/banner.svg" width="100%" alt="tasks-api-dotnet"/>
+</div>
 
-A clean, well-tested **Minimal API** for task management, built with **ASP.NET Core**, **EF Core** and **xUnit**.
+<h1 align="center">tasks-api-dotnet</h1>
+<p align="center"><em>Minimal API .NET limpa e bem testada para gerenciamento de tarefas</em></p>
+<p align="center"><strong>ASP.NET Core Minimal API → EF Core InMemory → xUnit</strong></p>
 
-## Features
+<div align="center">
+<a href="https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml"><img src="https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml/badge.svg" alt="CI"/></a>
+<img src="https://img.shields.io/badge/.NET_10-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt="dotnet"/>
+<img src="https://img.shields.io/badge/C%23_12-239120?style=flat-square&logo=csharp&logoColor=white" alt="csharp"/>
+<img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=black" alt="swagger"/>
+<img src="https://img.shields.io/badge/License-MIT-2E7D32?style=flat-square" alt="license"/>
+</div>
 
-- Full CRUD for tasks (todos) over a RESTful HTTP interface.
-- Optional `?done=true|false` filter when listing tasks.
-- Input validation: empty titles are rejected with `400`.
-- Correct REST semantics: `201 Created` with a `Location` header, `204 No Content` on delete, `404 Not Found` for unknown ids.
-- Repository abstraction (`ITaskRepository`) backed by the EF Core in-memory provider.
-- Interactive **Swagger UI** / OpenAPI documentation.
-- Integration tests with `WebApplicationFactory` covering every endpoint.
+<div align="center">
+<a href="#sobre"><img src="https://img.shields.io/badge/▸_SOBRE-1987F0?style=for-the-badge" alt="sobre"/></a>
+<a href="#endpoints"><img src="https://img.shields.io/badge/▸_ENDPOINTS-000000?style=for-the-badge" alt="endpoints"/></a>
+<a href="#fluxo-da-requisição"><img src="https://img.shields.io/badge/▸_FLUXO-1987F0?style=for-the-badge" alt="fluxo"/></a>
+<a href="#uso"><img src="https://img.shields.io/badge/▸_USO-000000?style=for-the-badge" alt="uso"/></a>
+</div>
 
-## The model
+<br/>
 
-```jsonc
-{
-  "id": "f1c5...",        // Guid, server-generated
-  "title": "Buy milk",     // string, required and non-empty
-  "done": false,           // bool
-  "createdAt": "2026-06-16T12:00:00Z" // UTC, server-generated
-}
-```
+> 📘 **Swagger UI incluso** — rode a API e abra `/swagger` pra explorar tudo interativamente.
+
+## Sobre
+
+Uma **Minimal API** limpa e bem testada para gerenciamento de tarefas, construída com **ASP.NET Core**, **EF Core** e **xUnit**.
+
+**Destaques:**
+- CRUD completo de tarefas via interface REST.
+- Filtro opcional `?done=true|false` ao listar.
+- Validação de entrada: títulos vazios são rejeitados com `400`.
+- Semântica REST correta: `201 Created` com header `Location`, `204 No Content` no delete, `404 Not Found` pra ids desconhecidos.
+- Abstração de repositório (`ITaskRepository`) sobre o provider EF Core InMemory.
+- Documentação interativa **Swagger UI** / OpenAPI.
+- Testes de integração com `WebApplicationFactory` cobrindo todo endpoint.
 
 ## Endpoints
 
-| Method | Path           | Description                                   | Status codes              |
-| ------ | -------------- | --------------------------------------------- | ------------------------- |
-| GET    | `/tasks`       | List tasks (optional `?done=true\|false`)     | `200`                     |
-| GET    | `/tasks/{id}`  | Get a single task by id                       | `200`, `404`              |
-| POST   | `/tasks`       | Create a new task                             | `201`, `400`              |
-| PUT    | `/tasks/{id}`  | Replace an existing task                      | `200`, `400`, `404`       |
-| PATCH  | `/tasks/{id}/toggle` | Flip the `done` flag of a task          | `200`, `404`              |
-| DELETE | `/tasks/{id}`  | Delete a task by id                           | `204`, `404`              |
+| Método | Rota | Descrição | Status |
+|---|---|---|---|
+| GET | `/tasks` | Lista tarefas (opcional `?done=true\|false`) | `200` |
+| GET | `/tasks/{id}` | Busca uma tarefa por id | `200`, `404` |
+| POST | `/tasks` | Cria uma nova tarefa | `201`, `400` |
+| PUT | `/tasks/{id}` | Substitui uma tarefa existente | `200`, `400`, `404` |
+| PATCH | `/tasks/{id}/toggle` | Alterna a flag `done` | `200`, `404` |
+| DELETE | `/tasks/{id}` | Remove uma tarefa | `204`, `404` |
 
-## Request flow
+## Fluxo da Requisição
 
 ```mermaid
 flowchart LR
-    Client([Client]) -->|HTTP request| Endpoint[Minimal API endpoint]
-    Endpoint --> Validation{Valid input?}
-    Validation -->|No| BadRequest[400 / 404 response]
-    Validation -->|Yes| Repo[ITaskRepository]
+    Client([Cliente]) -->|requisição HTTP| Endpoint[Endpoint Minimal API]
+    Endpoint --> Validation{Entrada válida?}
+    Validation -->|Não| BadRequest[Resposta 400 / 404]
+    Validation -->|Sim| Repo[ITaskRepository]
     Repo --> EF[(EF Core InMemory)]
     EF --> Repo
-    Repo --> Response[Serialized result]
-    Response -->|HTTP response| Client
+    Repo --> Response[Resultado serializado]
+    Response -->|resposta HTTP| Client
 ```
 
-## Getting started
+## Uso
 
-### Prerequisites
-
-- [.NET SDK 10](https://dotnet.microsoft.com/download)
-
-### Run the API
+**Pré-requisito:** [.NET SDK 10](https://dotnet.microsoft.com/download)
 
 ```bash
 dotnet run --project src/TasksApi
 ```
 
-The API listens on `http://localhost:5080`. The Swagger UI is available at:
+API em `http://localhost:5080`, Swagger UI em `http://localhost:5080/swagger`.
 
-```
-http://localhost:5080/swagger
-```
-
-## Usage examples
-
-> The examples below assume the API is running on `http://localhost:5080`.
-
-### Create a task — `201 Created`
-
+**Exemplos:**
 ```bash
+# Criar (201 Created)
 curl -i -X POST http://localhost:5080/tasks \
   -H "Content-Type: application/json" \
   -d '{ "title": "Buy milk" }'
-```
 
-```http
-HTTP/1.1 201 Created
-Location: /tasks/3f2504e0-4f89-41d3-9a0c-0305e82c3301
-Content-Type: application/json
+# Alternar conclusão
+curl -i -X PATCH http://localhost:5080/tasks/{id}/toggle
 
-{
-  "id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-  "title": "Buy milk",
-  "done": false,
-  "createdAt": "2026-06-16T12:00:00.123Z"
-}
-```
-
-### Create with an empty title — `400 Bad Request`
-
-```bash
-curl -i -X POST http://localhost:5080/tasks \
-  -H "Content-Type: application/json" \
-  -d '{ "title": "" }'
-```
-
-```http
-HTTP/1.1 400 Bad Request
-Content-Type: application/problem+json
-
-{
-  "errors": {
-    "title": [ "Title is required and cannot be empty." ]
-  }
-}
-```
-
-### List tasks — `200 OK`
-
-```bash
-curl http://localhost:5080/tasks
-# Only completed tasks:
+# Listar só as concluídas
 curl "http://localhost:5080/tasks?done=true"
 ```
 
-```json
-[
-  {
-    "id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-    "title": "Buy milk",
-    "done": false,
-    "createdAt": "2026-06-16T12:00:00.123Z"
-  }
-]
-```
-
-### Get a task by id — `200 OK` / `404 Not Found`
-
-```bash
-curl http://localhost:5080/tasks/3f2504e0-4f89-41d3-9a0c-0305e82c3301
-```
-
-```http
-HTTP/1.1 404 Not Found
-```
-
-### Update a task — `200 OK`
-
-```bash
-curl -i -X PUT http://localhost:5080/tasks/3f2504e0-4f89-41d3-9a0c-0305e82c3301 \
-  -H "Content-Type: application/json" \
-  -d '{ "title": "Buy milk", "done": true }'
-```
-
-```json
-{
-  "id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-  "title": "Buy milk",
-  "done": true,
-  "createdAt": "2026-06-16T12:00:00.123Z"
-}
-```
-
-### Toggle a task's completion — `200 OK` / `404 Not Found`
-
-Flips the `done` flag with a single call — no body required.
-
-```bash
-curl -i -X PATCH http://localhost:5080/tasks/3f2504e0-4f89-41d3-9a0c-0305e82c3301/toggle
-```
-
-```json
-{
-  "id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
-  "title": "Buy milk",
-  "done": true,
-  "createdAt": "2026-06-16T12:00:00.123Z"
-}
-```
-
-An unknown id returns `404 Not Found`.
-
-### Delete a task — `204 No Content`
-
-```bash
-curl -i -X DELETE http://localhost:5080/tasks/3f2504e0-4f89-41d3-9a0c-0305e82c3301
-```
-
-```http
-HTTP/1.1 204 No Content
-```
-
-A second delete of the same id returns `404 Not Found`.
-
-## Running tests
-
+**Testes:**
 ```bash
 dotnet test
 ```
+xUnit + `Microsoft.AspNetCore.Mvc.Testing` exercitando a API ponta a ponta: criação, busca, listagem, filtro `done`, atualização, toggle, exclusão e validação.
 
-The suite uses xUnit and `Microsoft.AspNetCore.Mvc.Testing` to exercise the API end to end, covering creation, retrieval, listing, the `done` filter, updates, toggling, deletion and validation.
-
-## Project structure
-
+**Estrutura:**
 ```
 tasks-api-dotnet/
 ├── src/TasksApi/            # Minimal API
-│   ├── Data/                # EF Core DbContext
-│   ├── Endpoints/           # Endpoint mappings
-│   ├── Models/              # Entity and DTOs
-│   ├── Repositories/        # ITaskRepository + EF implementation
-│   └── Program.cs
-└── tests/TasksApi.Tests/    # xUnit integration tests
+│   ├── Data/                # DbContext EF Core
+│   ├── Endpoints/           # Mapeamento de endpoints
+│   ├── Models/               # Entidade e DTOs
+│   └── Repositories/         # ITaskRepository + implementação EF
+└── tests/TasksApi.Tests/     # Testes de integração xUnit
 ```
 
-## License
+## Licença
 
-Released under the [MIT License](LICENSE). Copyright (c) 2026 Geovana Grigorio.
+[MIT](LICENSE).
+
+<div align="center">
+  <img src="https://file.loading.io/color/feature/thumb/Blues-8.png?" width="100%" height="10px" alt="divider"/>
+</div>
+
+<p align="center"><sub>Desenvolvido por <strong><a href="https://github.com/geoggrigori">Grigori</a></strong> · 2026</sub></p>
