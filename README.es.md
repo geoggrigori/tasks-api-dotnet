@@ -10,10 +10,6 @@
 <a href="README.es.md"><img src="https://img.shields.io/badge/Español-1987F0?style=for-the-badge" alt="Español"/></a>
 </div>
 
-<div align="center">
-  <img src="assets/banner.svg" width="100%" alt="tasks-api-dotnet"/>
-</div>
-
 <h1 align="center">tasks-api-dotnet</h1>
 <p align="center"><em>Minimal API .NET limpia y bien probada para gestión de tareas</em></p>
 <p align="center"><strong>ASP.NET Core Minimal API → EF Core InMemory → xUnit</strong></p>
