@@ -14,10 +14,6 @@
 
 <br/>
 
-<h1 align="center">tasks-api-dotnet</h1>
-<p align="center"><em>Minimal API .NET limpa e bem testada para gerenciamento de tarefas</em></p>
-<p align="center"><strong>ASP.NET Core Minimal API → EF Core InMemory → xUnit</strong></p>
-
 <div align="center">
 <a href="https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml"><img src="https://github.com/geoggrigori/tasks-api-dotnet/actions/workflows/ci.yml/badge.svg" alt="CI"/></a>
 <img src="https://img.shields.io/badge/.NET_10-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt="dotnet"/>
